@@ -2,8 +2,30 @@
 
 一个面向课程设计、论文文档和项目分析场景的图表自动生成工具。用户可以手动填写结构化内容，也可以导入项目代码，由系统分析项目结构并辅助生成图表。
 
+## 产品页面
+
+### 首页
+
 <p align="center">
   <img src="docs/images/homepage.png" alt="图表自动生成工具首页" width="900">
+</p>
+
+### 功能模块图
+
+<p align="center">
+  <img src="docs/images/function-module.png" alt="功能模块图编辑与预览页面" width="900">
+</p>
+
+### 流程图
+
+<p align="center">
+  <img src="docs/images/flowchart.png" alt="流程图编辑与预览页面" width="900">
+</p>
+
+### 项目智能分析
+
+<p align="center">
+  <img src="docs/images/project-analyzer.png" alt="项目智能分析页面" width="900">
 </p>
 
 ## 项目亮点
