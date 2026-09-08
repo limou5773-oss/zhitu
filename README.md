@@ -1,25 +1,36 @@
 # 图表自动生成工具
 
-## 项目简介
+一个面向课程设计、论文文档和项目分析场景的图表自动生成工具。用户可以手动填写结构化内容，也可以导入项目代码，由系统分析项目结构并辅助生成图表。
 
-本项目是一个面向课程设计、论文文档和项目分析场景的图表自动生成工具。用户可以在网页中选择图表类型，填写结构化文本或项目内容，系统自动生成对应图表，并支持预览和导出。
+<p align="center">
+  <img src="docs/images/homepage.png" alt="图表自动生成工具首页" width="900">
+</p>
 
-系统前端基于 Vue 3、Vite、Element Plus 和 Mermaid 实现，后端基于 Express、TypeScript 和项目代码解析服务实现。项目既可以用于手动生成图表，也可以导入项目代码，由后端分析项目结构后辅助生成图表内容。
+## 项目亮点
 
-## 主要功能
+- 覆盖功能模块图、三线表、用例图、流程图、时序图、数据流图和 ER 图。
+- 支持 ZIP 上传和 GitHub 仓库导入。
+- 通过代码解析器提取 Controller、Service、Entity、数据库表、路由和 API 等结构化信息。
+- 调用 DeepSeek 辅助分析项目业务逻辑，并将结果转换为可渲染的图表数据。
+- AI 调用失败时，根据已解析的项目结构生成基础图表，保证流程可继续使用。
+- 支持图表预览、JSON 查看和图片导出，适合直接插入课程设计或论文文档。
 
-- 功能模块图：根据系统名称和模块结构生成层级功能图。
-- 三线表：根据表格字段和内容生成规范表格。
-- 用例图：根据参与者和用例关系生成 UML 用例图。
-- 流程图：根据业务步骤生成流程图。
-- 时序图：根据对象交互过程生成 UML 时序图。
-- 数据流图：根据外部实体、加工处理、数据存储和数据流生成数据流图。
-- ER 图：根据实体、字段和关系生成数据库 E-R 图。
-- 项目智能分析：导入项目代码后，分析项目结构并辅助生成图表。
+## 页面功能
+
+| 页面 | 用途 |
+| --- | --- |
+| 功能模块图 | 根据系统名称和模块层级生成树形功能图 |
+| 三线表 | 根据字段和内容生成规范三线表 |
+| 用例图 | 根据参与者和用例关系生成 UML 用例图 |
+| 流程图 | 根据业务步骤生成流程图 |
+| 时序图 | 根据对象交互过程生成 UML 时序图 |
+| 数据流图 | 根据外部实体、加工处理、数据存储和数据流生成数据流图 |
+| ER 图 | 根据实体、字段和关系生成数据库 E-R 图 |
+| 项目智能分析 | 导入项目代码后，分析项目结构并批量生成图表 |
 
 ## 技术栈
 
-前端：
+### 前端
 
 - Vue 3
 - Vite
@@ -30,7 +41,7 @@
 - html-to-image
 - file-saver
 
-后端：
+### 后端
 
 - Node.js
 - Express
@@ -41,111 +52,82 @@
 - simple-git
 - Zod
 
-## 目录结构
+## 项目结构
 
 ```text
-rjzt
-├─ src                         前端源码
+zhitu
+├─ src
 │  ├─ components               公共组件
 │  ├─ router                   前端路由
 │  ├─ styles                   全局样式
-│  ├─ utils                    图表渲染、导出和存储工具
+│  ├─ utils                    图表渲染、导出和本地存储工具
 │  └─ views                    各类图表页面
-├─ server                      后端服务
+├─ server
 │  ├─ src
-│  │  ├─ routes                接口路由
-│  │  ├─ services              项目解析、图表生成和 AI 服务
-│  │  └─ types                 类型定义
+│  │  ├─ routes                上传、导入和分析接口
+│  │  ├─ services              代码解析、AI 调用和图表生成服务
+│  │  └─ types                 请求和图表类型定义
 │  ├─ .env.example             后端环境变量模板
-│  └─ package.json             后端依赖配置
-├─ package.json                前端依赖配置
-├─ vite.config.ts              Vite 配置
-├─ tsconfig.json               TypeScript 配置
-└─ README.md                   项目说明文档
+│  └─ package.json
+├─ docs/images                 README 产品截图
+├─ package.json
+├─ vite.config.ts
+└─ README.md
 ```
 
-## 环境要求
+## 项目智能分析流程
 
-- Node.js 18 及以上
-- npm 9 及以上
+1. 用户上传 ZIP 文件或填写 GitHub 仓库地址。
+2. 后端保存或克隆项目，并过滤依赖、构建产物和二进制文件。
+3. 代码解析器提取项目目录、技术栈、接口、实体、数据表和路由等信息。
+4. 后端将结构化摘要发送给 DeepSeek，按用户选择的图表类型并行生成结果。
+5. 对模型结果做格式标准化；单个图表失败时使用本地规则兜底。
+6. 前端缓存图表数据，使用 Mermaid 渲染，并支持预览和导出。
 
-## 前端运行
+## 本地运行
 
-在项目根目录执行：
+### 环境要求
+
+- Node.js 18+
+- npm 9+
+
+### 启动前端
 
 ```powershell
 npm install
 npm run dev
 ```
 
-前端默认访问地址：
+前端默认地址：`http://localhost:5173`
 
-```text
-http://localhost:5173
-```
-
-## 后端运行
-
-进入后端目录：
+### 启动后端
 
 ```powershell
 cd server
 npm install
-```
-
-复制环境变量模板：
-
-```powershell
 Copy-Item .env.example .env
-```
-
-然后根据本机环境修改 `server/.env`。
-
-启动后端开发服务：
-
-```powershell
 npm run dev
 ```
 
-## 构建命令
+根据本机环境配置 `server/.env`。项目智能分析功能需要 DeepSeek API Key，Key 由用户在页面中输入，不应写入仓库。
 
-前端构建：
+### 构建
 
 ```powershell
 npm run build
-```
 
-后端构建：
-
-```powershell
 cd server
 npm run build
-```
-
-后端生产启动：
-
-```powershell
 npm run start
 ```
 
-## GitHub 上传说明
+## 安全与仓库说明
 
-本项目上传 GitHub 时不应包含本地依赖、构建产物、环境变量和临时截图。以下内容已经通过 `.gitignore` 排除：
+- 不要提交 `.env`、`server/.env`、API Key 或其他真实密钥。
+- 上传项目会过滤 `node_modules`、`dist`、`.git` 和常见二进制文件。
+- 当前项目分析数据暂存于后端内存中，并在一段时间后清理，适合演示和课程设计场景。
+- 生产环境还应增加用户鉴权、请求限流、HTTPS、密钥脱敏和持久化任务管理。
 
-```text
-node_modules/
-server/node_modules/
-dist/
-server/dist/
-output/
-.playwright-cli/
-.env
-server/.env
-tmp-*.png
-```
+## License
 
-仓库中保留 `server/.env.example` 作为配置模板。真实密钥、接口地址和本地私有配置只应写入 `server/.env`，不要提交到 GitHub。
-
-## 使用建议
-
-如果用于论文或课程设计文档，建议先在页面中选择对应图表类型，再按页面提示输入实体、模块、流程或关系。生成图表后可以导出图片，并插入 Word 文档中作为系统设计图、数据流图、E-R 图或流程图。
+暂未声明开源许可证。
